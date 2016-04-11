@@ -13,12 +13,16 @@ int main()
 {
 	//std::cout << "Bonjour" << std::endl;
 	bool b;
-	Accumulateur acc;
-	std::vector<Point3D> cercle = acc.generateCircle(1, 0, 0);
+	bool d;
+	Accumulateur accCercle;
+	Accumulateur accRandom;
+	std::vector<Point3D> cercle = accCercle.generateCircle(1, 0, 0);
+	std::vector<Point3D> random = accRandom.generateRandom();
 	for (int i = 0; i < cercle.size(); i++) {
-		//std::cout << "i : " << i << std::endl;
-		b = acc.tick(cercle.at(i));
-		std::cout << i << " : " << b << std::endl;
+		b = accCercle.tick(cercle.at(i));
+		std::cout << "cercle " << i << " : " << b << std::endl;
+		d = accRandom.tick(random.at(i));
+		std::cout << "random " << i << " : " << d << std::endl;
 	}
 	system("pause");
 }

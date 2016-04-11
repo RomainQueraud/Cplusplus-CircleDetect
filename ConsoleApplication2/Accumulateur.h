@@ -35,7 +35,7 @@ public:
 	Accumulateur();
 	~Accumulateur();
 
-	std::vector<Point3D> getVector();
+	std::vector<Point3D>& getVector();
 	int getMaxSize();
 
 	/*
@@ -98,5 +98,7 @@ public:
 	Ce sont des données test
 	*/
 	std::vector<Point3D> generateCircle(float rayon, float cx, float cy);
+
+	std::vector<Point3D> generateRandom();
 };
 

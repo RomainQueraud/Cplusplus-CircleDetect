@@ -12,7 +12,7 @@ Accumulateur::~Accumulateur()
 {
 }
 
-std::vector<Point3D> Accumulateur::getVector()
+std::vector<Point3D>& Accumulateur::getVector()
 {
 	return vector;
 }
@@ -98,6 +98,7 @@ bool Accumulateur::tick(Point3D p)
 	bool ret = false;
 	vector.push_back(p);
 	if (isCycleInPath()) {
+		std::cout << "Cycle" << std::endl;
 		setCube();
 		ret = isCircle();
 	}
@@ -108,14 +109,15 @@ bool Accumulateur::tick(Point3D p)
 bool Accumulateur::isCycleInPath()
 {
 	bool ret = false;
-	Point3D origin;
+	Point3D last;
 	Point3D actual;
 
 	if (getVector().size() >= getMaxSize()) {
-		origin = getVector().at(0);
+		last = getVector().at(getVector().size()-1);
 		for (int i = 0; i < getMaxSize()/2; i++) {
 			actual = getVector().at(i);
-			if (isClose(origin, actual)) {
+			if (isClose(last, actual)) {
+				std::cout << "CycleTrue : " << i << std::endl;
 				ret = true;
 				std::_Vector_iterator<std::_Vector_val<std::_Simple_types<Point3D>>> begin = getVector().begin();
 				getVector().erase(begin, begin + i); //Enlève les points inutiles
@@ -155,6 +157,18 @@ std::vector<Point3D> Accumulateur::generateCircle(float rayon, float cx, float c
 		float y = 1 * sin(theta);
 		float z = 0;
 		ret.push_back(Point3D(x, y, z, 10)); //10 millisecondes
+	}
+	return ret;
+}
+
+std::vector<Point3D> Accumulateur::generateRandom()
+{
+	std::vector<Point3D> ret;
+	for (int i = 0; i < 100; i++) {
+		float x = (rand() % 100) / 100.0;
+		float y = (rand() % 100) / 100.0;
+		float z = (rand() % 100) / 100.0;
+		ret.push_back(Point3D(x, y, z, 10));
 	}
 	return ret;
 }
